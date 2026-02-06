@@ -23,6 +23,14 @@ public class CajeroService {
     public Result rellenarCajero(int idUsuario, int idCajero, int idDenominacion, int cantidad) {
         Result result = new Result();
         try {
+
+            if (cantidad % 5 != 0) {
+                result.correct = false;
+                result.errorMessage = "Debe ser multiplo de 5";
+                result.status = 400;
+                return result;
+            }
+
             cajeroRepository.rellenarCajero(idUsuario, idCajero, idDenominacion, cantidad);
 
             result.correct = true;
@@ -30,7 +38,7 @@ public class CajeroService {
 
         } catch (Exception ex) {
             result.correct = false;
-            result.errorMessage = ex.getMessage();
+            result.errorMessage = "No se Relleno";
             result.ex = ex;
             result.status = 500;
         }
